@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #28293E;
+  --color-secondary: #EF6D58;
+  --color-ternary: #878793;
+  --animate-spining: spining 1s ease-in-out infinite;
+  @keyframes spining {
+    0%,
+    100% {
+      transform: rotate(-3deg);
+    }
+    50% {
+      transform: rotate(3deg);
+    }
+  }
+}
