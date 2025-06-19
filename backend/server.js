@@ -35,11 +35,28 @@ app.use('/api/automateShowtime', automateShowtimeRoute);
 app.use('/api/user', userRoutes)
 
 console.log(moment().add(4, "days").format("YYYY-MM-DD"),moment().add(4, "days").unix());
+
+
 app.get('/',(req,res) => {
     res.send('server started');
 })
 
 
+app.get('/getshow', async(req,res) => {
+    try{
+        let topFive;
+    const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.TMDB_APIKEY}`;
+    const response = await fetch(url);
+    const result = await response.json();
+    if(!result){
+        res.status(500).json({message: "No result"})
+    }
+    res.status(200).json({ result});
+    }catch(err){
+        console.log(err);
+        res.status(500).json({message: "error while fetching now playing"});
+    }
+})
 
 //runs everyday at midnight
 // cron.schedule('0 0 * * *', async() => {
