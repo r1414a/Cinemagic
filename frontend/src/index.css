@@ -1,0 +1,26 @@
+@import "tailwindcss";
+@import "flowbite/src/themes/default";
+@plugin "flowbite/plugin";
+@source "../node_modules/flowbite";
+
+@theme {
+  --color-blue: #0A061E;
+  --color-lightpurple: #4D4767;
+  --color-cream: #C9887C;
+  --color-dyellow: #FEE505;
+  --color-lyellow: #CFDC34;
+  --color-lwhite: #D9D9D9;
+  --color-lblue: #37C6F3;
+  --color-gray: #909090;
+
+  --animate-fadeIn: fadeIn 0.5s ease-in-out forwards;
+
+  @keyframes fadeIn {
+      0%{
+        opacity: 0;
+      }
+      100%{
+        opacity: 1;
+      }
+  }
+}

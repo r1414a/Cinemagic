@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+
+:root{
+  --dyellow: #FEE505;
+  --gray: #909090;
+}
+
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0A061E;
+}
+
+
+/*hero section carousel pagination*/
+.swiper-pagination.swiper-pagination-bullets-dynamic.swiper-pagination-clickable.swiper-pagination-bullets.swiper-pagination-horizontal{
+  bottom: 50px;
+}
+
+.swiper-pagination-bullet{
+  background-color: white !important;
+  width: 10px !important;
+  height: 10px !important;
+}
+
+.swiper-pagination-bullet-active{
+  width: 10px !important;
+  height: 10px !important;
+  background-color: white !important;
+}
+
+
+.swiper-button-prev , .swiper-button-next{
+  display: none !important;
+}
+
+
+/*styles for userallticketstabs*/
+.userallticketstabsactive{
+  color: var(--dyellow);
+  border-bottom: 3px solid var(--dyellow);
+}
+
+.userallticketstabsinactive{
+  color: white;
+  border: none;
+}
+
+.userallticketstabsinactive::after{
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background: #fff;
+  transition: width 0.3s ease-in-out;
+}
+
+.userallticketstabsinactive:hover::after{
+  width: 100%;
+}
+
+.userallticketstabsinactive:hover{
+  color: var(--dyellow);
+  cursor: pointer;
+}
+

@@ -1,0 +1,1 @@
+const h=async(r,e,a,f,i,n,s)=>{try{let t;e==="GET"||(t=await fetch(`http://localhost:8000${r}`,{method:e,headers:{"Content-Type":"application/json"},body:JSON.stringify(a)}));const o=await t.json();return t.ok?i&&i(o):n&&n(o),o}catch(t){throw console.log(t),new Error(f)}finally{s&&s()}};export{h as a};
