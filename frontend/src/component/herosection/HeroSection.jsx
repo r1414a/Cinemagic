@@ -21,24 +21,8 @@ const TMDB_API_KEY = import.meta.env.VITE_TMDB_APIKEY;
 export default function HeroSection() {
   const dispatch = useDispatch();
 
-  // const [topFiveMovies, setTopFiveMovies] = useState(null);
 
   const { details, credits, isLoading } = useSelector((state) => state.movie);
-
-  // useEffect(() => {
-  //   if (topFiveMovies) {
-  //     const getShowTime = async () => {
-  //       const result = await allapis(
-  //         "/api/automateShowtime",
-  //         "POST",
-  //         { topFiveMovies: topFiveMovies },
-  //         "Error while storing showtime"
-  //       );
-  //       console.log(result);
-  //     };
-  //     getShowTime();
-  //   }
-  // }, [topFiveMovies]);
 
   useEffect(() => {
     const fetchTopMovies = async () => {
@@ -49,28 +33,12 @@ export default function HeroSection() {
           "Error while getting top five now playing.",
           (result) => {
             console.log(result);
-            const arr = JSON.stringify(result.arr_of_movie_id);
-            localStorage.setItem("arr_of_movieID", arr)
             result.data.forEach((movie) => {
             dispatch(fetchMovieDetailCrewAndCast(movie.id));
           });
           }
         )
         console.log(result)
-      //   const now_playing_url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}`;
-
-      //   const response = await fetch(now_playing_url);
-      //   const result = await response.json();
-      //   if (response.ok) {
-      //     const topFive = result.results.slice(0, 5);
-      //     // setTopFiveMovies(topFive);
-      //     topFive.forEach((movie) => {
-      //       dispatch(fetchMovieDetailCrewAndCast(movie.id));
-      //     });
-      //   }
-      // } catch (err) {
-      //   console.log(err);
-      // }
     };
     fetchTopMovies();
 
