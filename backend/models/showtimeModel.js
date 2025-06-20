@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const ShowtimeSchema = new mongoose.Schema({
+    movieID: {
+        type: Number,
+        required: true
+    },
     movieTitle: {
         type: String,
         required: true

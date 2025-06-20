@@ -210,6 +210,7 @@ app.get('/getshow', async(req,res) => {
             const { aseat, rseat } = getAvailableAndReservedSeats();
 
              createdShowtime.push({
+                movieID: movie.id,
               movieTitle: movie.original_title,
               startTime: start,
               availableSeats: aseat,
