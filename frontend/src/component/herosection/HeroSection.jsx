@@ -45,6 +45,7 @@ export default function HeroSection() {
         const result = await allapis(
           "/api/movies/get-top-five-now-playing",
           "GET",
+          null,
           "Error while getting top five now playing.",
           (result) => {
             console.log(result);
@@ -82,7 +83,7 @@ export default function HeroSection() {
     return <Loading />;
   }
 
-  // console.log(details,credits)
+  console.log(details,credits)
 
   return (
     <section className=" h-screen">
