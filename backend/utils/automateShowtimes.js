@@ -136,7 +136,7 @@ function getAvailableAndReservedSeats() {
   return { aseat: available_seat_arr.sort(), rseat: reserved_seat_arr };
 }
 
-const automateShowTime = async () => {
+const automateShowTime = async (req,res) => {
   try {
     let topFive;
     const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.TMDB_APIKEY}`;
@@ -145,12 +145,12 @@ const automateShowTime = async () => {
     if (response.ok) {
       topFive = result.results.slice(0, 5);
     }
+    let createdShowtime = [];
 
     for (const movie of topFive) {
       const existInShowtime = await Showtime.findOne({ movieId: movie.id });
 
       if (!existInShowtime) {
-        // const todayDate = moment().format("YYYY-MM-DD");
         const times = [
           "09:30 AM",
           "12:00 PM",
@@ -170,20 +170,32 @@ const automateShowTime = async () => {
             showtime_arr = times.slice(num, num + 1);
           }
 
-          const { aseat, rseat } = getAvailableAndReservedSeats();
-          const dates = moment().add(i, "day").format("YYYY-MM-DD");
-          const createdShowtime = showtime_arr.map((time) => ({
-            movieId: movie.id,
-            startTime: time,
-            availableSeats: aseat,
-            reservedSeats: rseat,
-          }));
+          //16,17,18,19,20
+          //3, 4, 2, 4, 3
 
+          //showtime_arr = ["09:30 AM","12:00 PM","14:30 PM"]
 
-          console.log(createdShowtime);
-          res.json({createdShowtime});
+          const day = moment().add(i, "day").format("YYYY-MM-DD");
+          
+          for (let t of showtime_arr) {
+            const start = moment(`${day} ${t}`, "YYYY-MM-DD hh:mm A").toDate();
+            const { aseat, rseat } = getAvailableAndReservedSeats();
+
+             createdShowtime.push({
+              movieTitle: movie.original_title,
+              startTime: start,
+              availableSeats: aseat,
+              reservedSeats: rseat,
+            });
+          }
         }
       }
+    }
+    if (createdShowtime.length > 0) {
+      await Showtime.insertMany(createdShowtime);
+      res.status(200).json({ message: "Showtimes created." });
+    } else {
+      res.status(200).json({ message: "No new showtimes added (all already exist)." });
     }
   } catch (err) {
     console.log(err);

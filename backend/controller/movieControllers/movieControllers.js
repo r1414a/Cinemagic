@@ -32,7 +32,7 @@ const getReservationForShowtime = async (req, res) => {
       .json({ message: "reservation for showtime fetched", data: record });
   } catch (err) {
     console.log(err);
-    throw new Error("Error getting reservations for showtime form db.");
+    res.status(500).json({message:"Error getting reservations for showtime form db."});
   }
 };
 
@@ -78,7 +78,7 @@ const makeMovieReservation = async (req, res) => {
     res.status(200).json({ message: "Booking successful" });
   } catch (err) {
     console.log(err);
-    throw new Error("Error while making reservation.");
+    res.status(500).json({message:"Error while making reservation."});
   }
 };
 
@@ -107,12 +107,37 @@ const getShowtimeforAllDates = async (req, res) => {
     res.status(200).json({ showtime_arr });
   } catch (err) {
     console.log(err);
-    throw new Error("Error while making reservation.");
+    res.status(500).json({message: "Error while making reservation."});
   }
 };
+
+
+
+const getTopFiveNowPlaying = async (req,res) => {
+  try{
+    const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.TMDB_APIKEY}`;
+    let topFive, arr_of_movie_id=[];
+
+    const response = await fetch(url);
+    const result = await response.json();
+    if(response.ok){
+      topFive = result.results.slice(0, 5);
+    }
+
+    for( const movie of topFive){
+      arr_of_movie_id.push(movie.id);
+    }
+
+    res.status(200).json({message: "now playing fetched.", result:topFive, arr_of_movie_id});
+  }catch(err){
+    console.log(err);
+    res.status(500).json({message:"Error while getting top five now playing."});
+  }
+}
 
 export {
   getReservationForShowtime,
   makeMovieReservation,
   getShowtimeforAllDates,
+  getTopFiveNowPlaying
 };

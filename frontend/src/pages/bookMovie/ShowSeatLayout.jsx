@@ -92,16 +92,16 @@ export default function ShowSeatLayout() {
         <div className="absolute w-full z-10 h-full bg-radial-[at_50%_50%] from-transparent to-black to-0% opacity-[0.8] "></div>
 
         <div className="relative w-full h-full flex items-center justify-center  z-30">
-          <div className=" w-full max-w-6xl px-6 lg:px-10 py-32 rounded-md flex flex-col md:flex-row">
-            <div className=" relative w-full md:w-[70%] space-y-12">
+          <div className=" w-full max-w-6xl px-6 lg:px-10 pt-38 pb-32 rounded-md flex gap-14 md:gap-0 flex-col md:flex-row">
+            <div className=" relative w-full md:w-[65%] lg:w-[70%] space-y-12">
               <NavLink to={`/movie/book/${details[0].id}`}>
-                <button className="absolute top-0 text-white font-semibold flex items-center gap-3 cursor-pointer hover:text-dyellow">
+                <button className="absolute -top-14 text-white font-semibold flex items-center gap-3 cursor-pointer hover:text-dyellow">
                   <FaBackward />
                   back
                 </button>
               </NavLink>
               <div>
-                <ul className="flex justify-center gap-8">
+                <ul className="flex justify-center gap-4 md:gap-8">
                   <li className="flex gap-2 items-center text-white">
                     <RiArmchairFill className="text-cream" />
                     Available
@@ -126,19 +126,19 @@ export default function ShowSeatLayout() {
                             key={colIndex}
                             className={`${
                               colIndex === 4 || colIndex === 8
-                                ? "me-18"
+                                ? "me-6 md:me-10 lg:me-18"
                                 : colIndex === 0
-                                ? "me-6 "
+                                ? "me-3 md:me-6"
                                 : null
-                            } text-sm text-center`}
+                            } text-xs md:text-sm text-center`}
                           >
                             {colIndex === 0 ? (
-                              <p className="text-white">{rowcode}</p>
+                              <p className="text-xs md:text-sm text-white">{rowcode}</p>
                             ) : rowIndex > 0 ? (
                               <div
                                 onClick={handleSeatSelection}
                                 data-seatlocation={`${rowcode}-${colIndex}`}
-                                className="w-5 h-5 cursor-pointer"
+                                className="w-4 h-4 md:w-5 md:h-5 cursor-pointer"
                               >
                                 <RiArmchairFill
                                   className={`w-full h-full text-xl text-cream ${
@@ -153,7 +153,7 @@ export default function ShowSeatLayout() {
                                 />
                               </div>
                             ) : (
-                              <div className="w-5 h-5">
+                              <div className="w-4 h-4 md:w-5 md:h-5">
                                 <p className="text-white">{colIndex}</p>
                               </div>
                             )}
@@ -169,7 +169,7 @@ export default function ShowSeatLayout() {
                   xmlns="http://www.w3.org/2000/svg"
                   // width="550"
                   // height="50"
-                  className="mx-auto w-[360px] lg:w-[550px] h-[] lg:h-[50px] rotate-180"
+                  className="mx-auto w-[330px] lg:w-[550px] h-[40px] lg:h-[50px] rotate-180"
                   viewBox="0 0 704 60"
                   fill="none"
                 >
@@ -186,7 +186,7 @@ export default function ShowSeatLayout() {
             </div>
             <div
               id="showSeatLayoutTicket"
-              className={`w-full md:w-[30%] bg-dyellow rounded-md`}
+              className={`w-md  mx-auto md:w-[35%] lg:w-[30%] bg-dyellow rounded-md`}
             >
               <div className="p-3 border-b-3 border-dashed">
                 <h1 className="text-xl text-center">TICKETS</h1>
@@ -211,9 +211,9 @@ export default function ShowSeatLayout() {
                   </p>
                 </div>
               </div>
-              <div className={`${seat.length === 0 ? "px-6" : "px-0"}`}>
+              <div className={`${seat.length === 0 ? "p-6" : "px-0"}`}>
                 {seat.length === 0 ? (
-                  <div className="flex flex-col justify-center items-center h-48 rounded-md bg-blue text-white  gap-3 px-6 py-4">
+                  <div className="flex flex-col justify-center items-center min-h-48 rounded-md bg-blue text-white  gap-3 px-6 py-4">
                     <TbArmchair2Off className="text-3xl" />
                     <p className="text-md">No seat selected.</p>
                   </div>
