@@ -39,6 +39,7 @@ app.get('/',(req,res) => {
     res.send('server started');
 })
 
+console.log("saasdas",moment().add(4, "days").format("YYYY-MM-DD"))
 
 function getAvailableAndReservedSeats() {
   let rows = ["A", "B", "C", "D", "E", "F", "G", "H"];

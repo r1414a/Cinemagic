@@ -3,15 +3,6 @@ import Showtime from "../models/showtimeModel.js";
 dotenv.config();
 import moment from "moment";
 
-// const myfunc = () => {
-//   for (let i = 0; i < 5; i++) {
-//     const dates = moment().add(i, "day").format("YYYY-MM-DD");
-//     console.log(dates);
-//   }
-// }
-
-// export default myfunc;
-
 function getAvailableAndReservedSeats() {
   let rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
   let cols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
@@ -136,7 +127,7 @@ function getAvailableAndReservedSeats() {
   return { aseat: available_seat_arr.sort(), rseat: reserved_seat_arr };
 }
 
-const automateShowTime = async (req,res) => {
+const getAutomateShowTime = async () => {
   try {
     let topFive;
     const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.TMDB_APIKEY}`;
@@ -147,51 +138,53 @@ const automateShowTime = async (req,res) => {
     }
     let createdShowtime = [];
 
+    const date = moment().add(4, "days").toDate();
+
     for (const movie of topFive) {
-      const existInShowtime = await Showtime.findOne({ movieId: movie.id });
+      const existInShowtime = await Showtime.findOne({
+        movieID: movie.id,
+        startTime: { $gt: date },
+      });
+      console.log("movieId", existInShowtime)
+      
 
-      if (!existInShowtime) {
-        const times = [
-          "09:30 AM",
-          "12:00 PM",
-          "14:30 PM",
-          "17:15 PM",
-          "20:00 PM",
-        ];
+      if(!existInShowtime){
+      const times = [
+        "09:30 AM",
+        "12:00 PM",
+        "14:30 PM",
+        "17:15 PM",
+        "20:00 PM",
+      ];
 
-        for (let i = 0; i < 5; i++) {
-          let showtime_arr = [];
-          const num = Math.floor(Math.random() * 5) + 1;
-          console.log(num);
+      let showtime_arr = [];
+      const num = Math.floor(Math.random() * 5) + 1;
 
-          if (num >= 2) {
-            showtime_arr = times.slice(0, num);
-          } else {
-            showtime_arr = times.slice(num, num + 1);
-          }
+      if (num >= 2) {
+        showtime_arr = times.slice(0, num);
+      } else {
+        showtime_arr = times.slice(num, num + 1);
+      }
 
-          //16,17,18,19,20
-          //3, 4, 2, 4, 3
+      const newDate = moment().add(5, "days").format("YYYY-MM-DD");
 
-          //showtime_arr = ["09:30 AM","12:00 PM","14:30 PM"]
+      for (let t of showtime_arr) {
+        const start = moment(`${newDate} ${t}`, "YYYY-MM-DD hh:mm A").toDate();
+        const { aseat, rseat } = getAvailableAndReservedSeats();
 
-          const day = moment().add(i, "day").format("YYYY-MM-DD");
-          
-          for (let t of showtime_arr) {
-            const start = moment(`${day} ${t}`, "YYYY-MM-DD hh:mm A").toDate();
-            const { aseat, rseat } = getAvailableAndReservedSeats();
+        createdShowtime.push({
+          movieID: movie.id,
+          movieTitle: movie.original_title,
+          startTime: start,
+          availableSeats: aseat,
+          reservedSeats: rseat,
+        });
+      }
 
-             createdShowtime.push({
-              movieTitle: movie.original_title,
-              startTime: start,
-              availableSeats: aseat,
-              reservedSeats: rseat,
-            });
-          }
-        }
       }
     }
-    if (createdShowtime.length > 0) {
+
+   if (createdShowtime.length > 0) {
       await Showtime.insertMany(createdShowtime);
       res.status(200).json({ message: "Showtimes created." });
     } else {
@@ -199,9 +192,8 @@ const automateShowTime = async (req,res) => {
     }
   } catch (err) {
     console.log(err);
-    throw new Error("Error while creating movie's showtimes.");
+    throw new Error("Error while creating new showtime.");
   }
 };
 
-
-export default automateShowTime;
+export default getAutomateShowTime;

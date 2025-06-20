@@ -141,7 +141,7 @@ const getTopFiveNowPlaying = async (req, res) => {
         newmovieID.push(a);
       }
     }
-
+//21,22,23,24,25
     if (newmovieID.length > 0) {
       for (const movie of newmovieID) {
         const times = [
