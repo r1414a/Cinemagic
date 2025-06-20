@@ -175,58 +175,56 @@ app.get('/getshow', async(req,res) => {
     }
     let createdShowtime = [];
 
-    res.status(200).json({topFive})
+    for (const movie of topFive) {
+      const existInShowtime = await Showtime.findOne({ movieId: movie.id });
 
-    // for (const movie of topFive) {
-    //   const existInShowtime = await Showtime.findOne({ movieId: movie.id });
+      if (!existInShowtime) {
+        const times = [
+          "09:30 AM",
+          "12:00 PM",
+          "14:30 PM",
+          "17:15 PM",
+          "20:00 PM",
+        ];
 
-    //   if (!existInShowtime) {
-    //     const times = [
-    //       "09:30 AM",
-    //       "12:00 PM",
-    //       "14:30 PM",
-    //       "17:15 PM",
-    //       "20:00 PM",
-    //     ];
+        for (let i = 0; i < 5; i++) {
+          let showtime_arr = [];
+          const num = Math.floor(Math.random() * 5) + 1;
+          console.log(num);
 
-    //     for (let i = 0; i < 5; i++) {
-    //       let showtime_arr = [];
-    //       const num = Math.floor(Math.random() * 5) + 1;
-    //       console.log(num);
+          if (num >= 2) {
+            showtime_arr = times.slice(0, num);
+          } else {
+            showtime_arr = times.slice(num, num + 1);
+          }
 
-    //       if (num >= 2) {
-    //         showtime_arr = times.slice(0, num);
-    //       } else {
-    //         showtime_arr = times.slice(num, num + 1);
-    //       }
+          //16,17,18,19,20
+          //3, 4, 2, 4, 3
 
-    //       //16,17,18,19,20
-    //       //3, 4, 2, 4, 3
+          //showtime_arr = ["09:30 AM","12:00 PM","14:30 PM"]
 
-    //       //showtime_arr = ["09:30 AM","12:00 PM","14:30 PM"]
-
-    //       const day = moment().add(i, "day").format("YYYY-MM-DD");
+          const day = moment().add(i, "day").format("YYYY-MM-DD");
           
-    //       for (let t of showtime_arr) {
-    //         const start = moment(`${day} ${t}`, "YYYY-MM-DD hh:mm A").toDate();
-    //         const { aseat, rseat } = getAvailableAndReservedSeats();
+          for (let t of showtime_arr) {
+            const start = moment(`${day} ${t}`, "YYYY-MM-DD hh:mm A").toDate();
+            const { aseat, rseat } = getAvailableAndReservedSeats();
 
-    //          createdShowtime.push({
-    //           movieTitle: movie.original_title,
-    //           startTime: start,
-    //           availableSeats: aseat,
-    //           reservedSeats: rseat,
-    //         });
-    //       }
-    //     }
-    //   }
-    // }
-    // if (createdShowtime.length > 0) {
-    //   await Showtime.insertMany(createdShowtime);
-    //   res.status(200).json({ message: "Showtimes created." });
-    // } else {
-    //   res.status(200).json({ message: "No new showtimes added (all already exist)." });
-    // }
+             createdShowtime.push({
+              movieTitle: movie.original_title,
+              startTime: start,
+              availableSeats: aseat,
+              reservedSeats: rseat,
+            });
+          }
+        }
+      }
+    }
+    if (createdShowtime.length > 0) {
+      await Showtime.insertMany(createdShowtime);
+      res.status(200).json({ message: "Showtimes created." });
+    } else {
+      res.status(200).json({ message: "No new showtimes added (all already exist)." });
+    }
     }catch(err){
         console.log(err);
         res.status(500).json({message: "error while fetching now playing"});

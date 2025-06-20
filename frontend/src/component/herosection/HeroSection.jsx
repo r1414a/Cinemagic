@@ -48,7 +48,9 @@ export default function HeroSection() {
           "Error while getting top five now playing.",
           (result) => {
             console.log(result);
-            result.forEach((movie) => {
+            const arr = JSON.stringify(result.arr_of_movie_id);
+            localStorage.setItem("arr_of_movieID", arr)
+            result.data.forEach((movie) => {
             dispatch(fetchMovieDetailCrewAndCast(movie.id));
           });
           }

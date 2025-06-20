@@ -128,7 +128,7 @@ const getTopFiveNowPlaying = async (req,res) => {
       arr_of_movie_id.push(movie.id);
     }
 
-    res.status(200).json({message: "now playing fetched.", result:topFive, arr_of_movie_id});
+    res.status(200).json({message: "now playing fetched.", data:topFive, arr_of_movie_id});
   }catch(err){
     console.log(err);
     res.status(500).json({message:"Error while getting top five now playing."});
