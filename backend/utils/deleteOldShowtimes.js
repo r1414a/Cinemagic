@@ -5,6 +5,7 @@ import moment from 'moment'
 const deleteOldShowtimes = async () => {
   try {
     const now = new Date();
+    let deletedNoReservationCount=0;
 
     const fiveDaysAgo = moment().subtract(5, "days").toDate();
 
