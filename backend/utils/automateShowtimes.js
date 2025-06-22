@@ -127,7 +127,7 @@ function getAvailableAndReservedSeats() {
   return { aseat: available_seat_arr.sort(), rseat: reserved_seat_arr };
 }
 
-const getAutomateShowTime = async (req,res) => {
+const getAutomateShowTime = async () => {
   try {
     let topFive;
     const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.TMDB_APIKEY}`;
@@ -186,9 +186,9 @@ const getAutomateShowTime = async (req,res) => {
 
    if (createdShowtime.length > 0) {
       await Showtime.insertMany(createdShowtime);
-      res.status(200).json({ message: "Showtimes created." });
+      console.log("Showtimes created.");
     } else {
-      res.status(200).json({ message: "No new showtimes added (all already exist)." });
+      console.log("No new showtimes added (all already exist).");
     }
   } catch (err) {
     console.log(err);
