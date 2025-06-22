@@ -127,7 +127,7 @@ function getAvailableAndReservedSeats() {
   return { aseat: available_seat_arr.sort(), rseat: reserved_seat_arr };
 }
 
-const getAutomateShowTime = async () => {
+const getAutomateShowTime = async (req,res) => {
   try {
     let topFive;
     const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.TMDB_APIKEY}`;
