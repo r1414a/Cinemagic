@@ -240,7 +240,7 @@ console.log("saasdas",moment().add(4, "days").format("YYYY-MM-DD"))
 // Schedule to run every day at 1:00 AM
 
 // /*/2 * * * *"   0 1 * * *
-cron.schedule("*/2 * * * *", async () => {
+cron.schedule("0 1 * * *", async () => {
   console.log("🌙 Nightly Showtime Creation Cron Running...");
   try {
     await getAutomateShowTime();
