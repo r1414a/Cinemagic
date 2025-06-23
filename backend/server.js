@@ -5,10 +5,9 @@ import authRoutes from "./routes/authRoutes.js";
 import {connectDB} from './db/connectDB.js';
 import cookieParser from 'cookie-parser';
 import moment from 'moment';
-// import cron from "node-cron"
-// import Showtime from './models/showtimeModel.js';
+import Showtime from './models/showtimeModel.js';
 import cron from 'node-cron'
-// import Reservation from './models/reservationModel.js';
+import Reservation from './models/reservationModel.js';
 import userRoutes from './routes/userRoutes.js';
 import moviesRoutes from "./routes/moviesRoutes.js";
 import getAutomateShowTime from './utils/automateShowtimes.js';
