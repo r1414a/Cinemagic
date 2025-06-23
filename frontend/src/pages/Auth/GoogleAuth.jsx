@@ -12,10 +12,11 @@ export default function GoogleAuth() {
     const result = await allapis(
       "/api/auth/google",
       "POST",
+      true,
       { authorization_code: code },
       "Error in google authentication.",
       (result) => {
-        dispatch(setUserProfile(result.user));
+        dispatch(setUserProfile(result));
         navigate("/");
       }
     );

@@ -33,7 +33,14 @@ const userSlice = createSlice({
     setUserProfile: (state, action) => {
       console.log(action.payload);
       state.userProfile = action.payload;
+      state.authStatus = action.payload.authstatus;
     },
+    resetUserState: (state) => {
+      state.userProfile = null
+      state.authStatus= null
+      state.isLoading= false
+      state.isError= false
+    }
   },
   extraReducers: (builder) => {
         builder
@@ -56,6 +63,6 @@ const userSlice = createSlice({
   }
 });
 
-export const { setUserProfile } = userSlice.actions;
+export const { setUserProfile,resetUserState } = userSlice.actions;
 
 export default userSlice.reducer;

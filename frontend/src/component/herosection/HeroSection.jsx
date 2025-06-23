@@ -28,6 +28,7 @@ export default function HeroSection() {
     const fetchTopMovies = async () => {
         const result = await allapis(
           "/api/movies/get-top-five-now-playing",
+          null,
           "GET",
           null,
           "Error while getting top five now playing.",

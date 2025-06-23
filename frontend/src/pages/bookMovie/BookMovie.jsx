@@ -48,6 +48,7 @@ export default function BookMovie() {
     const result = await allapis(
       "/api/movies/getShowtimeforAllDates",
       "POST",
+      false,
       { date: date, movieID: details[0].id },
       "Error while getting showtimes for all dates.",
       (result) => {

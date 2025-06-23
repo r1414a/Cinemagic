@@ -15,6 +15,7 @@ export default function UserAllTickets(){
             allapis(
                 "/api/user/getUserReservations",
                 "POST",
+                false,
                 {userID: userProfile._id},
                 "Error while fetching user's all reservations.",
                 (result) => {

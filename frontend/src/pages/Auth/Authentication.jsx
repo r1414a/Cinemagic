@@ -28,7 +28,7 @@ export default function Authentication() {
   const otp_digit_5 = useRef();
   const otp_digit_6 = useRef();
   const [isLoading, setIsLoading] = useState(false);
-  const [successToast, setSuccessToast] = useState(true);
+  const [successToast, setSuccessToast] = useState(false);
   const [errorToast, setErrorToast] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -58,6 +58,7 @@ export default function Authentication() {
     const result = await allapis(
       "/api/auth/send-otp",
       "POST",
+      false,
       email ? { email } : { userEmail },
       "Error while sending otp for verification.",
       (result) => {
@@ -77,6 +78,7 @@ export default function Authentication() {
     const result = await allapis(
       "/api/auth/verify-otp",
       "POST",
+      false,
       { token, otp, userEmail },
       "Error while verifying otp.",
       (result) => {

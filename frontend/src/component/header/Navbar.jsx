@@ -1,24 +1,26 @@
 import ticketlogo from "../../assets/ticketlogo.png";
-import { FiSearch } from "react-icons/fi";
-import { CgMenuGridO } from "react-icons/cg";
-import HeaderDrawer from "./HeaderDrawer";
+// import { FiSearch } from "react-icons/fi";
+// import { CgMenuGridO } from "react-icons/cg";
+// import HeaderDrawer from "./HeaderDrawer";
 import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router";
 import { initFlowbite } from "flowbite";
-import { useSelector } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
+import { resetUserState } from "../../redux/features/userSlice/user";
+import allapis from "../../util/allapis";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(null);
-  // const {user} =  useContext(UserContext);
   const { userProfile, authStatus } = useSelector((state) => state.user);
-
-  // console.log("navbar", authStatus, userProfile);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (authStatus) {
       initFlowbite();
     }
   }, [authStatus]);
+
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 100);
 
@@ -26,6 +28,21 @@ export default function Navbar() {
 
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+
+  const handleLogout = async() => {
+    const result = await allapis(
+      "/api/auth/logout",
+      "GET",
+      true,
+      null,
+      "Error while logging out user.",
+      (result) => {
+        dispatch(resetUserState());
+      }
+    )
+  }
+
   return (
     <nav className={` z-[999] fixed w-full px-4 lg:px-0 py-4 md:py-3 top-0 start-0 ${
         scrolled &&
@@ -106,13 +123,8 @@ export default function Navbar() {
                       Your Ticket(s)
                     </NavLink>
                   </li>
-                <li>
-                  <NavLink
-                    to={'#'}
-                    className="block py-2 px-3 text-black md:text-white "
-                  >
+                <li onClick={handleLogout} className="block py-2 px-3 text-black md:text-white ">
                     Logout
-                  </NavLink>
                 </li>
               </>
             )}

@@ -39,6 +39,7 @@ export default function ShowSeatLayout() {
       const result = await allapis(
         "/api/movies/showtime/reservations",
         "POST",
+        false,
         // { starttime: selectedTime, id: details[0].id },
         { showtimeID: showtimekiID },
         "Error getting reservations for showtime form db.",
@@ -296,6 +297,7 @@ function ShowSeatInfoAndPayment({
     const result = await allapis(
       "/api/movies/bookMovie",
       "POST",
+      false,
       { showtimekiID, seat, theater, city, email: userProfile.email,price },
       "Error while making a reservation.",
       (result) => {

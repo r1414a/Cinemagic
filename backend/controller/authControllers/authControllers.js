@@ -194,7 +194,8 @@ export const authenticateGoogleUser = async (req, res) => {
 
     res.status(200).json({
       message: "User authenticated successfully",
-      user: existingOrNewUser
+      user: existingOrNewUser,
+      authstatus: true
     })
   } catch (err) {
     console.log("Error while authentication and getting from google", err);
@@ -225,5 +226,16 @@ export const checkIfUserHasAccount = async (req,res) => {
   }catch (err) {
     console.log("Error while authenticating user.", err);
     res.status(500).json({ message: "Failed to authenticate user." });
+  }
+}
+
+
+export const logoutUser = async(req,res) => {
+  try{
+    res.clearCookie("authentication_token");
+    res.status(200).json({message: 'user logged out successfully.'})
+  }catch (err) {
+    console.log("Error while loging out user.", err);
+    res.status(500).json({ message: "Failed to logout user." });
   }
 }

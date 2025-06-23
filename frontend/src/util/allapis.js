@@ -1,18 +1,33 @@
 
-const allapis = async(endpoint,apiMethod,apiBody,errorMsg,responseSuccessCallback,responseErrorCallback,finallyCallback) => {
+const allapis = async(endpoint,apiMethod,isgoogleAuth,apiBody,errorMsg,responseSuccessCallback,responseErrorCallback,finallyCallback) => {
     try{
 
-        let response;
+        let response,options;
         if(apiMethod === 'GET'){
             response = await fetch(`${import.meta.env.VITE_DEV_BACKEND_URL}${endpoint}`);
         }else{
-            response = await fetch(`${import.meta.env.VITE_DEV_BACKEND_URL}${endpoint}`,{
+
+            isgoogleAuth
+            ?
+            options = {
+                method: apiMethod,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(apiBody),
+                credentials: "include"
+            }
+
+            :
+            options = {
                 method: apiMethod,
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(apiBody)
-            });
+            }
+
+            response = await fetch(`${import.meta.env.VITE_DEV_BACKEND_URL}${endpoint}`,options);
         }
 
         const result = await response.json();
