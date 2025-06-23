@@ -135,7 +135,9 @@ export const verifyOTPForAuthentication = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000
     })
 
-    res.status(200).json({ message: "OTP verification successfull." });
+    res.status(200).json({ message: "OTP verification successfull.",
+      user: existingOrNewUser,
+      authstatus: true });
   } catch (err) {
     console.log("Error while sending otp for verification.", err);
     res.status(500).json({ message: "Failed to send otp for verification." });

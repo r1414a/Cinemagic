@@ -12,9 +12,12 @@ import { FaBackward } from "react-icons/fa";
 import LoadingButton from "../../component/ui/buttons/loadingButton/LoadingButton";
 import ShowToast from "../../component/ui/toasts/ShowToast";
 import allapis from "../../util/allapis";
+import { useDispatch } from "react-redux";
+import { setUserProfile } from "../../redux/features/userSlice/user";
 
 export default function Authentication() {
   const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
   const location = useLocation();
   const [searchParams] = useSearchParams(location.search);
   const userEmail = searchParams.get("email");
@@ -78,10 +81,11 @@ export default function Authentication() {
     const result = await allapis(
       "/api/auth/verify-otp",
       "POST",
-      false,
+      true,
       { token, otp, userEmail },
       "Error while verifying otp.",
       (result) => {
+        dispatch(setUserProfile(result));
         setSuccessToast(true);
         setSuccessMessage("OTP verification successfull.");
         navigate("/");
