@@ -2,17 +2,19 @@ import ticketlogo from "../../assets/ticketlogo.png";
 // import { FiSearch } from "react-icons/fi";
 // import { CgMenuGridO } from "react-icons/cg";
 // import HeaderDrawer from "./HeaderDrawer";
-import { useContext, useEffect, useState } from "react";
-import { NavLink } from "react-router";
+import { useEffect, useState } from "react";
+import { NavLink, useNavigate } from "react-router";
 import { initFlowbite } from "flowbite";
 import { useDispatch,useSelector } from "react-redux";
 import { resetUserState } from "../../redux/features/userSlice/user";
 import allapis from "../../util/allapis";
 
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(null);
   const { userProfile, authStatus } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   console.log("navbar",userProfile,authStatus)
 
@@ -41,6 +43,7 @@ export default function Navbar() {
       "Error while logging out user.",
       (result) => {
         dispatch(resetUserState());
+        navigate('/')
       }
     )
   }
