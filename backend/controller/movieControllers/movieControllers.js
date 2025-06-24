@@ -5,13 +5,130 @@ import User from "../../models/userModel.js";
 
 console.log("moviecontroller", moment.utc(Number(1750170600) * 1000).toDate());
 
-// async function get(){
-//     const tom= moment().add(1,'day');
-//     const show = await Showtime.find({movieId: 552524 , startTime: {$lt: tom}});
-//     console.log("get",show);
-// }
+function getAvailableAndReservedSeats() {
+  let rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  let cols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+  let all_seats_arr = [
+    "A-1",
+    "A-2",
+    "A-3",
+    "A-4",
+    "A-5",
+    "A-6",
+    "A-7",
+    "A-8",
+    "A-9",
+    "A-10",
+    "A-11",
+    "A-12",
+    "B-1",
+    "B-2",
+    "B-3",
+    "B-4",
+    "B-5",
+    "B-6",
+    "B-7",
+    "B-8",
+    "B-9",
+    "B-10",
+    "B-11",
+    "B-12",
+    "C-1",
+    "C-2",
+    "C-3",
+    "C-4",
+    "C-5",
+    "C-6",
+    "C-7",
+    "C-8",
+    "C-9",
+    "C-10",
+    "C-11",
+    "C-12",
+    "D-1",
+    "D-2",
+    "D-3",
+    "D-4",
+    "D-5",
+    "D-6",
+    "D-7",
+    "D-8",
+    "D-9",
+    "D-10",
+    "D-11",
+    "D-12",
+    "E-1",
+    "E-2",
+    "E-3",
+    "E-4",
+    "E-5",
+    "E-6",
+    "E-7",
+    "E-8",
+    "E-9",
+    "E-10",
+    "E-11",
+    "E-12",
+    "F-1",
+    "F-2",
+    "F-3",
+    "F-4",
+    "F-5",
+    "F-6",
+    "F-7",
+    "F-8",
+    "F-9",
+    "F-10",
+    "F-11",
+    "F-12",
+    "G-1",
+    "G-2",
+    "G-3",
+    "G-4",
+    "G-5",
+    "G-6",
+    "G-7",
+    "G-8",
+    "G-9",
+    "G-10",
+    "G-11",
+    "G-12",
+    "H-1",
+    "H-2",
+    "H-3",
+    "H-4",
+    "H-5",
+    "H-6",
+    "H-7",
+    "H-8",
+    "H-9",
+    "H-10",
+    "H-11",
+    "H-12",
+  ];
 
-//  get();
+  let totalAvailable = Math.floor(Math.random() * 96) + 1;
+  console.log(totalAvailable);
+  let available_seat_arr = [];
+
+  while (available_seat_arr.length < totalAvailable) {
+    //random rows
+    let randrow = Math.floor(Math.random() * 8);
+    //random cols
+    let randcol = Math.floor(Math.random() * 12);
+
+    if (!available_seat_arr.includes(rows[randrow] + "-" + cols[randcol])) {
+      available_seat_arr.push(rows[randrow] + "-" + cols[randcol]);
+    }
+  }
+
+  const reserved_seat_arr = all_seats_arr.filter(
+    (seat) => !available_seat_arr.includes(seat)
+  );
+
+  return { aseat: available_seat_arr.sort(), rseat: reserved_seat_arr };
+}
+
 
 const getReservationForShowtime = async (req, res) => {
   try {
