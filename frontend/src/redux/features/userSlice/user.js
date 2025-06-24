@@ -32,7 +32,7 @@ const userSlice = createSlice({
   reducers: {
     setUserProfile: (state, action) => {
       console.log(action.payload);
-      state.userProfile = action.payload;
+      state.userProfile = action.payload.user;
       state.authStatus = action.payload.authstatus;
     },
     resetUserState: (state) => {
