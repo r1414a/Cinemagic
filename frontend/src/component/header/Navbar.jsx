@@ -102,18 +102,18 @@ export default function Navbar() {
             <li>
               <NavLink
                 to={'/'}
-                className="block py-2 px-3 text-black md:text-white "
+                className="cursor-pointer block py-2 px-3 text-black md:text-white "
                 aria-current="page"
               >
                 Home
               </NavLink>
             </li>
-            {authStatus !== null && !authStatus ? (
+            {!authStatus ? (
               
                 <li>
                   <NavLink
                     to={"/authentication"}
-                    className="block py-2 px-3 text-black md:text-white "
+                    className="cursor-pointer block py-2 px-3 text-black md:text-white "
                   >
                     Login/Signup
                   </NavLink>
@@ -123,12 +123,12 @@ export default function Navbar() {
                   <li>
                     <NavLink
                       to={"/profile/allreservations"}
-                      className="block py-2 px-3 text-black md:text-white "
+                      className="cursor-pointer block py-2 px-3 text-black md:text-white "
                     >
                       Your Ticket(s)
                     </NavLink>
                   </li>
-                <li onClick={handleLogout} className="block py-2 px-3 text-black md:text-white ">
+                <li onClick={handleLogout} className="cursor-pointer block py-2 px-3 text-black md:text-white ">
                     Logout
                 </li>
               </>

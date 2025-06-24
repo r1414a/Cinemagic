@@ -25,7 +25,7 @@ const userSlice = createSlice({
   name: "user",
   initialState: {
     userProfile: null,
-    authStatus: null,
+    authStatus: false,
     isLoading: false,
     isError: false,
   },
@@ -37,7 +37,7 @@ const userSlice = createSlice({
     },
     resetUserState: (state) => {
       state.userProfile = null
-      state.authStatus= null
+      state.authStatus= false
       state.isLoading= false
       state.isError= false
     }
@@ -47,7 +47,7 @@ const userSlice = createSlice({
         .addCase(checkUserAuth.pending, (state) => {
             state.isLoading = true;
             state.isError = null;
-            state.authStatus = null;
+            state.authStatus = false;
         })
         .addCase(checkUserAuth.fulfilled, (state,action) => {
             state.isLoading = true;
@@ -58,7 +58,7 @@ const userSlice = createSlice({
         .addCase(checkUserAuth.rejected, (state) => {
             state.isLoading = false;
             state.isError = true;
-            state.authStatus = null;
+            state.authStatus = false;
         })
   }
 });
