@@ -130,7 +130,7 @@ export const verifyOTPForAuthentication = async (req, res) => {
 
     res.cookie("authentication_token", JWTToken, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'Lax',
       maxAge: 7 * 24 * 60 * 60 * 1000
     })
@@ -182,7 +182,7 @@ export const authenticateGoogleUser = async (req, res) => {
 
     res.cookie("authentication_token", JWTToken, {
       httpOnly: true,
-      secure: false,
+      secure: true,
       sameSite: 'Lax',
       maxAge: 7 * 24 * 60 * 60 * 1000
     })
