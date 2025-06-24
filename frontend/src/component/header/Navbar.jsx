@@ -14,6 +14,8 @@ export default function Navbar() {
   const { userProfile, authStatus } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  console.log("navbar",userProfile,authStatus)
+
   useEffect(() => {
     if (authStatus) {
       initFlowbite();
@@ -33,7 +35,7 @@ export default function Navbar() {
   const handleLogout = async() => {
     const result = await allapis(
       "/api/auth/logout",
-      "GET",
+      "POST",
       true,
       null,
       "Error while logging out user.",
