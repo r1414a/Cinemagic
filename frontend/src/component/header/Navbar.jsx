@@ -35,7 +35,7 @@ export default function Navbar() {
   const handleLogout = async() => {
     const result = await allapis(
       "/api/auth/logout",
-      "POST",
+      "GET",
       true,
       null,
       "Error while logging out user.",

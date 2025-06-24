@@ -29,7 +29,7 @@ export default function HeroSection() {
         const result = await allapis(
           "/api/movies/get-top-five-now-playing",
           "GET",
-          null,
+          false,
           null,
           "Error while getting top five now playing.",
           (result) => {

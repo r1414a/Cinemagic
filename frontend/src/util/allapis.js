@@ -4,7 +4,16 @@ const allapis = async(endpoint,apiMethod,isgoogleAuth,apiBody,errorMsg,responseS
 
         let response,options;
         if(apiMethod === 'GET'){
-            response = await fetch(`${import.meta.env.VITE_DEV_BACKEND_URL}${endpoint}`);
+            isgoogleAuth ?
+            options = {
+                method: "GET",
+                credentials: "include"
+            }
+            :
+            options = {
+                method: "GET",
+            }
+            response = await fetch(`${import.meta.env.VITE_DEV_BACKEND_URL}${endpoint}`,options);
         }else{
 
             isgoogleAuth
