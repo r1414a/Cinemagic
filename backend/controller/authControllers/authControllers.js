@@ -228,7 +228,11 @@ export const checkIfUserHasAccount = async (req,res) => {
 
 export const logoutUser = async(req,res) => {
   try{
-    res.clearCookie("authentication_token");
+    res.clearCookie("authentication_token",{
+      httpOnly: true,
+      secure: true,
+      sameSite: 'None',
+    });
     res.status(200).json({message: 'user logged out successfully.'})
   }catch (err) {
     console.log("Error while loging out user.", err);
