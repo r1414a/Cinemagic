@@ -247,16 +247,16 @@ const getTopFiveNowPlaying = async (req, res) => {
     }
 
     for (const movie of topFive) {
-      arr_of_movie_id.push(movie.id);
+      arr_of_movie_id.push(movie);
     }
 
     const existingMovieIDArr = await Showtime.distinct("movieID");
     
     console.log("moviecontroller",arr_of_movie_id,existingMovieIDArr)
-    for (const a of arr_of_movie_id) {
-      console.log(a);
-      if (!existingMovieIDArr.includes(a)) {
-        newmovieID.push(a);
+    for (const movie of arr_of_movie_id) {
+     
+      if (!existingMovieIDArr.includes(movie.id)) {
+        newmovieID.push(movie);
       }
     }
 //21,22,23,24,25
