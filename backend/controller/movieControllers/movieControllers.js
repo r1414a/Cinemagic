@@ -250,9 +250,9 @@ const getTopFiveNowPlaying = async (req, res) => {
       arr_of_movie_id.push(movie.id);
     }
 
-    console.log("moviecontroller", topFive,arr_of_movie_id)
     const existingMovieIDArr = await Showtime.distinct("movieID");
-
+    
+    console.log("moviecontroller",arr_of_movie_id,existingMovieIDArr)
     for (const a of arr_of_movie_id) {
       console.log(a);
       if (!existingMovieIDArr.includes(a)) {
