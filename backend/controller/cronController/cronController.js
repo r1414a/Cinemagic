@@ -1,5 +1,5 @@
-import getAutomateShowTime from "../../utils/automateShowtimes";
-import deleteOldShowtimes from "../../utils/deleteOldShowtimes";
+import getAutomateShowTime from "../../utils/automateShowtimes.js";
+import deleteOldShowtimes from "../../utils/deleteOldShowtimes.js";
 
 export const automateAndDeleteShowtimes = async (req, res) => {
   try {
