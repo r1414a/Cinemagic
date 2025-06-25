@@ -1,5 +1,5 @@
 import express from 'express';
-import {automateAndDeleteShowtimes} from cronController
+import {automateAndDeleteShowtimes} from "../controller/cronController/cronController.js"
 
 const router = express.Router();
 
