@@ -218,7 +218,7 @@ export default function BookMovie() {
                             : null
                         }`}
                       >
-                        {moment.unix(obj.showtimes).tz("Asia/kolkata").format("HH:mm")}
+                        {moment.unix(obj.showtimes).tz("Asia/Kolkata").format("HH:mm")}
                       </button>
                     ))}
                 </div>

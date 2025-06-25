@@ -20,12 +20,14 @@ const TMDB_API_KEY = import.meta.env.VITE_TMDB_APIKEY;
 
 export default function HeroSection() {
   const dispatch = useDispatch();
+  const [loading,setLoading] = useState(false);
 
 
   const { details, credits, isLoading } = useSelector((state) => state.movie);
 
   useEffect(() => {
     const fetchTopMovies = async () => {
+      setLoading(true)
         const result = await allapis(
           "/api/movies/get-top-five-now-playing",
           "GET",
@@ -34,6 +36,7 @@ export default function HeroSection() {
           "Error while getting top five now playing.",
           (result) => {
             console.log(result);
+            setLoading(false)
             result.data.forEach((movie) => {
             dispatch(fetchMovieDetailCrewAndCast(movie.id));
           });
@@ -48,7 +51,7 @@ export default function HeroSection() {
     };
   }, [dispatch]);
 
-  if (isLoading) {
+  if (isLoading || loading) {
     return <Loading />;
   }
 

@@ -150,12 +150,12 @@ const getAutomateShowTime = async () => {
 
       if(!existInShowtime){
       const times = [
-        "09:30 AM",
-        "12:00 PM",
-        "14:30 PM",
-        "17:15 PM",
-        "20:00 PM",
-      ];
+          "04:00 AM",
+          "06:30 AM",
+          "09:00 AM",
+          "11:45 AM",
+          "02:30 PM",
+        ];
 
       let showtime_arr = [];
       const num = Math.floor(Math.random() * 5) + 1;

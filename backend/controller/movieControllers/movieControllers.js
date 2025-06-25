@@ -262,12 +262,20 @@ const getTopFiveNowPlaying = async (req, res) => {
 //21,22,23,24,25
     if (newmovieID.length > 0) {
       for (const movie of newmovieID) {
+        // const times = [
+        //   "09:30 AM",
+        //   "12:00 PM",
+        //   "14:30 PM",
+        //   "17:15 PM",
+        //   "20:00 PM",
+        // ];
+
         const times = [
-          "09:30 AM",
-          "12:00 PM",
-          "14:30 PM",
-          "17:15 PM",
-          "20:00 PM",
+          "04:00 AM",
+          "06:30 AM",
+          "09:00 AM",
+          "11:45 AM",
+          "02:30 PM",
         ];
 
         for (let i = 0; i < 5; i++) {
