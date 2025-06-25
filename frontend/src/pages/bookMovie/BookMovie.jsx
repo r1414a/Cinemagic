@@ -77,8 +77,8 @@ export default function BookMovie() {
         const date = moment().add(i, "days");
 
         date_and_day_arr.push({
-          date: date.format("YYYY-MM-DD"),
-          dateUnix: date.unix(),
+          date: date.tz("Asia/Kolkata").format("YYYY-MM-DD"),
+          dateUnix: date.tz("Asia/Kolkata").unix(),
         });
       }
 
@@ -94,7 +94,7 @@ export default function BookMovie() {
 
   const isTimeSlotPast = (timeslot) => {
   const now = moment().tz("Asia/Kolkata");
-  const timeslotTime = moment.unix(timeslot).tz("Asia/Kolkata");
+  const timeslotTime = moment(timeslot).tz("Asia/Kolkata");
   const selectedDay = moment.unix(selectedDate).tz("Asia/Kolkata");
 
   // Only compare time if the selected date is today
@@ -186,14 +186,14 @@ export default function BookMovie() {
                       onClick={() => getTodayShowTime(item.dateUnix)} //date in unix
                       key={item.date}
                       className={`cursor-pointer ${
-                        moment.unix(selectedDate).format("YYYY-MM-DD") ===
-                        moment.unix(item.dateUnix).format("YYYY-MM-DD")
+                        moment.unix(selectedDate).tz("Asia/Kolkata").format("YYYY-MM-DD") ===
+moment.unix(item.dateUnix).tz("Asia/Kolkata").format("YYYY-MM-DD")
                           ? "bg-dyellow text-black"
                           : null
                       } flex flex-col gap-1 border-2 border-dyellow py-2 hover:bg-dyellow hover:text-black transition-all duration-300 ease-in-out rounded-md text-sm`}
                     >
-                      <span>{moment(item.date).format("DD")}</span>
-                      <span>{moment(item.date).format("ddd")}</span>
+                      <span>{moment.tz(item.date, "YYYY-MM-DD", "Asia/Kolkata").format("DD")}</span>
+<span>{moment.tz(item.date, "YYYY-MM-DD", "Asia/Kolkata").format("ddd")}</span>
                     </button>
                   ))}
                 </div>
@@ -209,16 +209,16 @@ export default function BookMovie() {
                         disabled={isTimeSlotPast(obj.showtimes)}
                         key={obj.showtimes}
                         onClick={() => {
-                          setSelectedTime(obj.showtimes);
+                          setSelectedTime(moment(obj.showtimes).unix());
                           setShowtimeID(obj.showtimeID);
                         }}
                         className={`border-2 border-dyellow py-2 rounded-md cursor-pointer hover:bg-dyellow hover:text-black transition-all duration-300 ease-in-out text-sm disabled:bg-gray-600 disabled:text-gray-300 disabled:cursor-not-allowed ${
-                          selectedTime === obj.showtimes
+                          selectedTime === moment(obj.showtimes).unix()
                             ? "bg-dyellow text-black"
                             : null
                         }`}
                       >
-                        {moment.unix(obj.showtimes).tz("Asia/Kolkata").format("HH:mm")}
+                        {moment(obj.showtimes).tz("Asia/Kolkata").format("HH:mm A")}
                       </button>
                     ))}
                 </div>

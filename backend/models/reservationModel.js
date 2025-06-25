@@ -17,7 +17,7 @@ const ReservationSchema = new mongoose.Schema({
     paymentStatus: {
         type: String, 
     },
-    paymentAmout: {
+    paymentAmount: {
         type: Number,
         required: true
     },

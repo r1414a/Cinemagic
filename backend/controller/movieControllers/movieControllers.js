@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 import Showtime from "../../models/showtimeModel.js";
 import Reservation from "../../models/reservationModel.js";
 import User from "../../models/userModel.js";
@@ -137,7 +137,7 @@ const getReservationForShowtime = async (req, res) => {
     // const movieStartTime = moment.utc(Number(starttime) * 1000).toDate();
     // console.log(movieStartTime);
 
-    const record = await Showtime.findById({ _id: showtimeID });
+    const record = await Showtime.findById(showtimeID);
     // const record = await Showtime.findOneBy({
     //   startTime: movieStartTime,
     //   movieId: id,
@@ -160,11 +160,11 @@ const makeMovieReservation = async (req, res) => {
     const { seat, theater, city, email, showtimeID, price } = req.body;
     // console.log(movieID, seat, theater, city, showtime);
     // const movieStartTime = moment.utc(Number(showtime) * 1000).toDate();
-    const totalamout = seat.length * price;
+    const totalamount = seat.length * price;
 
     const user = await User.findOne({ email: email });
 
-    const availableShowtime = await Showtime.findById({ _id: showtimeID });
+    const availableShowtime = await Showtime.findById(showtimeID);
     // const availableShowtime = await Showtime.findOne({
     //   movieId: movieID,
     //   startTime: movieStartTime,
@@ -187,10 +187,10 @@ const makeMovieReservation = async (req, res) => {
       user: user._id,
       showtime: availableShowtime._id,
       seats: seat,
-      paymentAmount: totalamout,
+      paymentAmount: totalamount,
       theater: theater,
       city: city,
-      status: "active",
+      status: "coming",
     });
 
     res.status(200).json({ message: "Booking successful" });
@@ -205,7 +205,7 @@ const getShowtimeforAllDates = async (req, res) => {
     const { date, movieID } = req.body;
     console.log(date, movieID);
     let showtime_arr = [];
-    const inputDate = moment(date * 1000);
+    const inputDate = moment.tz(date * 1000, "Asia/Kolkata");
 
     const startOfDay = inputDate.startOf("day").toDate();
     const endOfDay = inputDate.endOf("day").toDate();
@@ -217,7 +217,7 @@ const getShowtimeforAllDates = async (req, res) => {
 
     for (const showtimeobj of show) {
       showtime_arr.push({
-        showtimes: moment(showtimeobj.startTime).unix(),
+        showtimes: showtimeobj.startTime,
         showtimeID: showtimeobj._id,
       });
     }

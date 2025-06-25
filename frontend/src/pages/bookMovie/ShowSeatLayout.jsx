@@ -287,7 +287,7 @@ function ShowSeatInfoAndPayment({
   price,
   theater,
   city,
-  showtimekiID
+  showtimeID
 }) {
   const { userProfile,authStatus } = useSelector((state) => state.user);
   console.log(userProfile);
@@ -302,7 +302,7 @@ function ShowSeatInfoAndPayment({
       "/api/movies/bookMovie",
       "POST",
       false,
-      { showtimekiID, seat, theater, city, email: userProfile.email,price },
+      { showtimeID, seat, theater, city, email: userProfile.email,price },
       "Error while making a reservation.",
       (result) => {
         navigate("/movie/book/success");
