@@ -6,12 +6,13 @@ import {connectDB} from './db/connectDB.js';
 import cookieParser from 'cookie-parser';
 import moment from 'moment';
 import Showtime from './models/showtimeModel.js';
-import cron from 'node-cron'
-import Reservation from './models/reservationModel.js';
+// import cron from 'node-cron'
+// import Reservation from './models/reservationModel.js';
 import userRoutes from './routes/userRoutes.js';
 import moviesRoutes from "./routes/moviesRoutes.js";
-import getAutomateShowTime from './utils/automateShowtimes.js';
-import deleteOldShowtimes from './utils/deleteOldShowtimes.js';
+// import getAutomateShowTime from './utils/automateShowtimes.js';
+// import deleteOldShowtimes from './utils/deleteOldShowtimes.js';
+import cronRoutes from './routes/cronRoutes.js';
 
 dotenv.config();
 const PORT = process.env.PORT || 8001;
@@ -32,16 +33,14 @@ app.use(express.urlencoded({extended: true}));
 
 app.use('/api/auth', authRoutes);
 app.use('/api/movies', moviesRoutes);
-app.use('/api/user', userRoutes)
-
-console.log(moment().add(4, "days").format("YYYY-MM-DD"),moment().add(4, "days").unix());
+app.use('/api/user', userRoutes);
+app.use('/api/cron', cronRoutes);
 
 
 app.get('/',(req,res) => {
     res.send('server started');
 })
 
-console.log("saasdas",moment().add(4, "days").format("YYYY-MM-DD"))
 
 function getAvailableAndReservedSeats() {
   let rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
@@ -168,7 +167,6 @@ function getAvailableAndReservedSeats() {
 }
 
 
-
 app.get('/getshow', async(req,res) => {
     try{
         let topFive;
@@ -238,21 +236,18 @@ app.get('/getshow', async(req,res) => {
 })
 
 
-
-
-
 // Schedule to run every day at 1:00 AM
 
 // /*/2 * * * *"   0 1 * * *
-cron.schedule("0 1 * * *", async () => {
-  console.log("🌙 Nightly Showtime Creation Cron Running...");
-  try {
-    await getAutomateShowTime();
-    await deleteOldShowtimes();
-  } catch (err) {
-    console.error("❌ Cron job failed:", err);
-  }
-});
+// cron.schedule("0 1 * * *", async () => {
+//   console.log("🌙 Nightly Showtime Creation Cron Running...");
+//   try {
+//     await getAutomateShowTime();
+//     await deleteOldShowtimes();
+//   } catch (err) {
+//     console.error("❌ Cron job failed:", err);
+//   }
+// });
 
 
 app.listen(PORT, (req,res) => {
