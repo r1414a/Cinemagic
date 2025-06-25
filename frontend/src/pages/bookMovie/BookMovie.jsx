@@ -3,13 +3,14 @@ import { useOutletContext, useParams, useNavigate } from "react-router";
 import { fetchMovieDetailCrewAndCast } from "../../redux/features/movieSlice/movie";
 import { useSelector, useDispatch } from "react-redux";
 import Loading from "../loading/Loading";
-import moment from "moment";
+// import moment from "moment";
 import FiveStars from "../../component/ui/starsReview/FiveStars";
 import { FaCalendarAlt } from "react-icons/fa";
 import MovieDuration from "../../component/ui/movieDuration/MovieDuration";
 import { dummyTheaters } from "../../data/dummyTheaters";
 import { FaArrowRight } from "react-icons/fa";
 import allapis from "../../util/allapis";
+import moment from "moment-timezone";
 
 export default function BookMovie() {
   const params = useParams();
@@ -92,19 +93,17 @@ export default function BookMovie() {
   }
 
   const isTimeSlotPast = (timeslot) => {
-    if (timeslot > moment().unix()) {
-      return;
-    }
-    console.log("running isTimeSlotPast");
-    const selected = moment.unix(selectedDate).format("YYYY-MM-DD");
-    const today = moment().format("YYYY-MM-DD");
+  const now = moment().tz("Asia/Kolkata");
+  const timeslotTime = moment.unix(timeslot).tz("Asia/Kolkata");
+  const selectedDay = moment.unix(selectedDate).tz("Asia/Kolkata");
 
-    if (selected === today) {
-      return moment().unix() > timeslot;
-    }
+  // Only compare time if the selected date is today
+  if (selectedDay.isSame(now, "day")) {
+    return timeslotTime.isBefore(now);
+  }
 
-    return false;
-  };
+  return false;
+};
 
   const handleProceedToSeatLayout = () => {
     navigate(
@@ -219,7 +218,7 @@ export default function BookMovie() {
                             : null
                         }`}
                       >
-                        {moment.unix(obj.showtimes).format("hh:mm A")}
+                        {moment.unix(obj.showtimes).tz("Asia/kolkata").format("HH:mm")}
                       </button>
                     ))}
                 </div>
