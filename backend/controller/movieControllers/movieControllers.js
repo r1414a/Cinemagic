@@ -211,7 +211,7 @@ const getShowtimeforAllDates = async (req, res) => {
     const endOfDay = inputDate.endOf("day").toDate();
 
     const show = await Showtime.find({
-      movieId: movieID,
+      movieID: movieID,
       startTime: { $gte: startOfDay, $lte: endOfDay },
     });
 

@@ -289,11 +289,15 @@ function ShowSeatInfoAndPayment({
   city,
   showtimekiID
 }) {
-  const { userProfile } = useSelector((state) => state.user);
+  const { userProfile,authStatus } = useSelector((state) => state.user);
   console.log(userProfile);
   const navigate = useNavigate();
 
   const handleBooking = async () => {
+     if(!authStatus){
+      navigate("/authentication");
+    }
+
     const result = await allapis(
       "/api/movies/bookMovie",
       "POST",
