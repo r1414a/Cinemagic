@@ -148,7 +148,7 @@ const getAutomateShowTime = async () => {
       console.log("movieId", existInShowtime)
       
 
-      if(!existInShowtime){
+      if(existInShowtime === null){
       const times = [
           "04:00 AM",
           "06:30 AM",
