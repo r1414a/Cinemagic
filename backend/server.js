@@ -241,15 +241,21 @@ app.get('/getshow', async(req,res) => {
 // Schedule to run every day at 1:00 AM
 
 // /*/2 * * * *"   0 1 * * *
-// cron.schedule("0 1 * * *", async () => {
-//   console.log("🌙 Nightly Showtime Creation Cron Running...");
-//   try {
-//     await getAutomateShowTime();
-//     await deleteOldShowtimes();
-//   } catch (err) {
-//     console.error("❌ Cron job failed:", err);
-//   }
-// });
+cron.schedule("*/5 * * * *", async () => {
+  console.log("🌙 Nightly Showtime Creation Cron Running...");
+  try {
+     const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.TMDB_APIKEY}`;
+    const response = await fetch(url);
+    const result = await response.json();
+    if (response.ok) {
+      topFive = result.results.slice(0, 5);
+    }
+
+    res.status(200).json({message: 'got 5'});
+  } catch (err) {
+    console.error("5min Cron job failed:", err);
+  }
+});
 
 
 app.listen(PORT, (req,res) => {
