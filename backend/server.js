@@ -6,7 +6,7 @@ import {connectDB} from './db/connectDB.js';
 import cookieParser from 'cookie-parser';
 import moment from 'moment';
 import Showtime from './models/showtimeModel.js';
-// import cron from 'node-cron'
+import cron from 'node-cron'
 // import Reservation from './models/reservationModel.js';
 import userRoutes from './routes/userRoutes.js';
 import moviesRoutes from "./routes/moviesRoutes.js";
@@ -242,7 +242,6 @@ app.get('/getshow', async(req,res) => {
 
 // /*/2 * * * *"   0 1 * * *
 cron.schedule("*/5 * * * *", async () => {
-  console.log("🌙 Nightly Showtime Creation Cron Running...");
   try {
      const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.TMDB_APIKEY}`;
     const response = await fetch(url);
