@@ -262,7 +262,7 @@ cron.schedule("*/5 * * * *", async () => {
       topFive = result.results.slice(0, 5);
     }
 
-    res.status(200).json({message: 'got 5'});
+    console.log('5 minute cron');
   } catch (err) {
     console.error("5min Cron job failed:", err);
   }
