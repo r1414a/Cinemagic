@@ -13,11 +13,13 @@ import moviesRoutes from "./routes/moviesRoutes.js";
 // import getAutomateShowTime from './utils/automateShowtimes.js';
 // import deleteOldShowtimes from './utils/deleteOldShowtimes.js';
 import cronRoutes from './routes/cronRoutes.js';
+import {getMovie} from "./utils/groqai.js";
 
 dotenv.config();
 const PORT = process.env.PORT || 8001;
 const app = express();
 connectDB();
+getMovie();
 
 app.use(cors({
     origin: process.env.CLIENT_DEV_URL,

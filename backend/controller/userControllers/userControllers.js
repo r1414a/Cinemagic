@@ -1,7 +1,7 @@
 import Showtime from "../../models/showtimeModel.js";
 import Reservation from "../../models/reservationModel.js";
 
-const getUserReservations = async (req, res) => {
+const getUserReservations = async (req, res) => { 
   try {
     const { userID } = req.body;
 

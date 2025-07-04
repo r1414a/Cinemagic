@@ -17,6 +17,7 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "google-auth-library": "^10.1.0",
+    "groq-sdk": "^0.26.0",
     "jsonwebtoken": "^9.0.2",
     "jsrsasign": "^11.1.0",
     "moment": "^2.30.1",
