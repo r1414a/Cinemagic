@@ -10,8 +10,8 @@ import cron from 'node-cron'
 // import Reservation from './models/reservationModel.js';
 import userRoutes from './routes/userRoutes.js';
 import moviesRoutes from "./routes/moviesRoutes.js";
-// import getAutomateShowTime from './utils/automateShowtimes.js';
-// import deleteOldShowtimes from './utils/deleteOldShowtimes.js';
+import getAutomateShowTime from './utils/automateShowtimes.js';
+import deleteOldShowtimes from './utils/deleteOldShowtimes.js';
 import cronRoutes from './routes/cronRoutes.js';
 import {getMovie} from "./utils/groqai.js";
 
@@ -241,8 +241,20 @@ app.get('/getshow', async(req,res) => {
 // Schedule to run every day at 1:00 AM
 
 // /*/2 * * * *"   0 1 * * *
+cron.schedule("0 20 * * *", async () => {
+  console.log("🌙 Nightly Showtime Creation Cron Running...");
+  try {
+    await getAutomateShowTime();
+    await deleteOldShowtimes();
+  } catch (err) {
+    console.error("❌ Cron job failed:", err);
+  }
+});
+
+
 cron.schedule("*/5 * * * *", async () => {
   try {
+    let topFive;
      const url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${process.env.TMDB_APIKEY}`;
     const response = await fetch(url);
     const result = await response.json();
