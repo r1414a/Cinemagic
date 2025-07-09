@@ -116,6 +116,7 @@ export default function HeroSection() {
                       <NavLink
                         to={`/movie/${movie.id}`}
                         className="py-3 px-10 rounded-sm font-semibold border-2 border-dyellow text-dyellow"
+                        state={{type: "top-rated"}}
                       >
                         More
                       </NavLink>
