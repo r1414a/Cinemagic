@@ -14,7 +14,17 @@ export default function Home(){
     });
 
 
+
   useEffect(() => {
+    const fetchSome = async () => {
+      try{
+        const res = await fetch(`${import.meta.env.VITE_DEV_BACKEND_URL}/api/movies/fetchSome`);
+        const data = await res.json();
+        console.log("fetchSome",data);
+      }catch(err){
+        console.log("fetchSOme error", err);
+      }
+    }
     const fetchTrendingMovies = async () => {
       try {
         // const url = `https://api.themoviedb.org/3/movie/${type === 'trending' ? 'popular' : 'upcoming'}?api_key=1aee3a34d219b4b6213fc8d93c1c07f5`;
@@ -38,6 +48,7 @@ export default function Home(){
       }
     };
     fetchTrendingMovies();
+    fetchSome();
 
   }, []);
     return(

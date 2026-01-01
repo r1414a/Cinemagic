@@ -333,7 +333,28 @@ const getTopFiveNowPlaying = async (req, res) => {
   }
 };
 
+
+const fetchSome = async(req,res) => {
+  try{
+    const res = await fetch(`https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.TMDB_APIKEY}&language=en-US&page=1`)
+
+    const data = await res.json();
+
+ res.status(200).json({
+        message: "fetchsome sucess",
+        data: data,
+      });
+  }catch(err){
+    console.log(err);
+    res
+      .status(500)
+      .json({ message: "fetchsome failed" });
+  
+  }
+}
+
 export {
+  fetchSome,
   getReservationForShowtime,
   makeMovieReservation,
   getShowtimeforAllDates,

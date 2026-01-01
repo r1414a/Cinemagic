@@ -192,6 +192,7 @@ export default function Authentication() {
             </>
           ) : (
             <>
+              <div className="my-2">
               <h1 className="text-white text-center text-xl md:text-3xl font-bold">
                 OTP Verification
               </h1>
@@ -199,7 +200,6 @@ export default function Authentication() {
                 Enter OTP code sent on{" "}
                 <span className="font-semibold">{userEmail}</span>
               </p>
-              <div className="my-2">
                 <form
                   onSubmit={handleEmailAuthVerifyOTP}
                   className=" space-y-5"
